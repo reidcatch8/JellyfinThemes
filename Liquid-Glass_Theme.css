@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 /* ================= GLOBAL ================= */
-
 html {
   box-sizing: border-box;
   font-family: "Inter", sans-serif !important;
@@ -18,8 +17,8 @@ html {
   --indicator-bg: #10101094;
   --transparent-bg: #10101000;
   --card-gap: 1vw;
-  
-/* ================= LIQUID GLASS VARIABLES ================= */
+
+  /* ================= LIQUID GLASS VARIABLES ================= */
   --glass-bg: rgba(32, 32, 32, 0.35);
 
   /* LIQUID GLASS WITH BLUR LEVELS */
@@ -31,16 +30,13 @@ html {
   --glass-shadow: 0 10px 25px rgba(0,0,0,0.35);
 }
 
-/* ======================== BACKDROP IMAGE - NO BLUR ======================== */
+/* ======================== BACKDROP IMAGE - NO FILTER ======================== */
 .backgroundContainer,
 .backgroundContainer.withBackdrop,
-.backdropContainer,
-.backgroundContainer::before,
-.backgroundContainer.withBackdrop::before,
-.skinHeader .backdropContainer {
+.backdropContainer {
+  filter: none !important; /* removed brightness/contrast filter */
   backdrop-filter: var(--liquid-glass-custom) !important;
   -webkit-backdrop-filter: var(--liquid-glass-custom) !important;
-  filter: none !important;
 }
 
 /* ======================== HEADER STYLES ======================== */
@@ -97,50 +93,21 @@ html {
   100% { transform: translate(0px,0px) scale(1.02); }
 }
 
-/* Card hover */
+/* Card hover effect */
 .cardBox:hover {
   transform: scale(1.06);
   backdrop-filter: var(--liquid-glass-custom-soft);
   -webkit-backdrop-filter: var(--liquid-glass-custom-soft);
   box-shadow:
     0 20px 40px rgba(0,0,0,0.5),
-    0 0 20px rgba(255,255,255,0.1);
+    0 0 20px rgba(0, 164, 220, 0.25);
+  outline: 2px solid rgba(0, 164, 220, 0.6);
+  outline-offset: 4px;
 }
 
 .cardBox:not(.visualCardBox) .cardPadder,
 .cardContent-shadow {
   box-shadow: none !important;
-}
-
-/* ======================== ACCORDION RISE EFFECT ======================== */
-.itemsContainer {
-  overflow: visible !important;
-}
-
-.itemsContainer > .card {
-  transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
-  transform: translateY(0);
-  position: relative;
-}
-
-/* Hovered card rises highest */
-.itemsContainer > .card:has(.cardBox:hover) {
-  transform: translateY(-20px) scale(1.08);
-  z-index: 5;
-}
-
-/* Immediate neighbors */
-.itemsContainer > .card:has(+ .card:has(.cardBox:hover)),
-.itemsContainer > .card:has(.cardBox:hover) + .card {
-  transform: translateY(-12px) scale(1.04);
-  z-index: 4;
-}
-
-/* Secondary neighbors */
-.itemsContainer > .card:has(+ .card + .card:has(.cardBox:hover)),
-.itemsContainer > .card:has(.cardBox:hover) + .card + .card {
-  transform: translateY(-6px) scale(1.02);
-  z-index: 3;
 }
 
 /* ======================== LIQUID SIDE-TAB SCROLL BUTTONS ======================== */
@@ -236,4 +203,37 @@ html {
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* ======================== TOUCH & MOBILE FRIENDLY ======================== */
+@media (hover: none), (pointer: coarse) {
+  .cardBox:hover,
+  .emby-scrollbuttons-button:hover {
+    transform: none !important;
+    box-shadow: var(--glass-shadow);
+  }
+}
+
+/* ======================== WATER PRESS EFFECT ======================== */
+@keyframes waterPress {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(0.95, 0.98); }
+  50%  { transform: scale(1.02, 0.97); }
+  75%  { transform: scale(0.98, 1.03); }
+  100% { transform: scale(1); }
+}
+
+.cardBox:active {
+  animation: waterPress 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.emby-scrollbuttons-button:active {
+  animation: waterPress 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ======================== CARD ACCORDION EFFECT (JS REQUIRED) ======================== */
+.itemsContainer > .card {
+  transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+  position: relative;
+  z-index: 1;
 }
