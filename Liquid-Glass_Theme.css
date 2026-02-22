@@ -102,9 +102,6 @@ html {
   transform: scale(1.06);
   backdrop-filter: var(--liquid-glass-custom-soft);
   -webkit-backdrop-filter: var(--liquid-glass-custom-soft);
-  box-shadow:
-    0 20px 40px rgba(0,0,0,0.5),
-    0 0 20px rgba(0, 164, 220, 0.25);
   outline: 2px solid rgba(0, 164, 220, 0.6);
   outline-offset: 4px;
 }
@@ -241,3 +238,4 @@ html {
   position: relative;
   z-index: 1;
 }
+
