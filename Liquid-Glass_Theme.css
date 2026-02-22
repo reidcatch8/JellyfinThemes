@@ -36,8 +36,6 @@ html {
 .backdropContainer {
   background-color: rgb(0 0 0 / 0%) !important;
   filter: none !important; /* removed brightness/contrast filter */
-  backdrop-filter: var(--liquid-glass-custom) !important;
-  -webkit-backdrop-filter: var(--liquid-glass-custom) !important;
 }
 
 /* ======================== HEADER STYLES ======================== */
@@ -238,4 +236,5 @@ html {
   position: relative;
   z-index: 1;
 }
+
 
