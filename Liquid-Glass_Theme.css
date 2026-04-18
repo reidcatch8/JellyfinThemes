@@ -29,7 +29,7 @@ html {
   --iris-2: rgba(120, 80, 255, 0.12);
   --iris-3: rgba(0, 220, 180, 0.10);
   --top-shine: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 40%, rgba(255,255,255,0.00) 100%);
-  --btn-radius: 50px;
+  --btn-radius: 50px !important;
   --btn-hue: 197deg;
 }
 
