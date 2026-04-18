@@ -2,120 +2,331 @@
 
 /* ================= GLOBAL ================= */
 html {
-  box-sizing: border-box;
   font-family: "Inter", sans-serif !important;
-  margin: 0;
-  padding: 0;
 }
 
-/* Global Variables */
+.jellyfinenhanced.requests {
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 999;
+    min-height: 500px; /* Ensure it has a footprint */
+}
+
+
+/* ================= VARIABLES ================= */
 :root {
-  --bg-color: #18181849;
-  --blur: blur(16px) saturate(180%);
-  --border-color: linear-gradient(45deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 41%, rgba(255, 255, 255, 0.1) 57%, rgba(255, 255, 255, 0.3) 100%);
-  --card-bg: #101010;
-  --indicator-bg: #10101094;
-  --transparent-bg: #10101000;
-  --card-gap: 1vw;
-
-  /* ================= LIQUID GLASS VARIABLES ================= */
-  --glass-bg: rgba(32, 32, 32, 0.35);
-
-  /* LIQUID GLASS WITH BLUR LEVELS */
-  --liquid-glass-custom-soft: blur(1px) saturate(160%) brightness(1.05) contrast(1.1);
-  --liquid-glass-custom: blur(2px) saturate(160%) brightness(1.05) contrast(1.1);
-  --liquid-glass-custom-strong: blur(3px) saturate(180%) brightness(1.1) contrast(1.15);
-
-  --glass-border: 1px solid rgba(255,255,255,0.15);
-  --glass-shadow: 0 10px 25px rgba(0,0,0,0.35);
+  --glass-bg:           rgba(255, 255, 255, 0.06);
+  --glass-bg-hover:     rgba(255, 255, 255, 0.10);
+  --glass-bg-strong:    rgba(255, 255, 255, 0.08);
+  --glass-border:       1px solid rgba(255, 255, 255, 0.18);
+  --glass-border-top:   1px solid rgba(255, 255, 255, 0.30);
+  --glass-shadow:       0 8px 32px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.25);
+  --glass-shadow-hover: 0 16px 48px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.30);
+  --blur-soft:          blur(6px) saturate(150%) brightness(1.04);
+  --blur-medium:        blur(10px) saturate(180%) brightness(1.06) contrast(1.05);
+  --blur-strong:        blur(16px) saturate(200%) brightness(1.08) contrast(1.08);
+  --iris-1: rgba(0, 164, 220, 0.22);
+  --iris-2: rgba(120, 80, 255, 0.12);
+  --iris-3: rgba(0, 220, 180, 0.10);
+  --top-shine: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 40%, rgba(255,255,255,0.00) 100%);
+  --btn-radius: 24px;
+  --btn-hue: 197deg;
 }
 
-/* ======================== BACKDROP IMAGE - NO FILTER ======================== */
+/* ======================== BACKDROP IMAGE ======================== */
 .backgroundContainer,
 .backgroundContainer.withBackdrop,
 .backdropContainer {
   filter: none !important;
-  backdrop-filter: none!important;
+  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  overflow: hidden !important;
+}
+.backgroundContainer.withBackdrop { background-color: rgb(0 0 0 / 0%) !important; }
+.backdropImage,
+.backgroundContainer .backgroundImage,
+.backdropContainer .backgroundImage {
+  position: absolute !important;
+  top: 0 !important; left: 0 !important;
+  width: 100% !important; height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
 }
 
-.backgroundContainer.withBackdrop {
-  background-color: rgb(0 0 0 / 0%) !important;
-}
-
-/* ======================== HEADER STYLES ======================== */
+/* ======================== HEADER — always visible ======================== */
 .skinHeader {
-  background: var(--glass-bg);
-  backdrop-filter: var(--liquid-glass-custom-strong);
-  -webkit-backdrop-filter: var(--liquid-glass-custom-strong);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--blur-strong);
+  -webkit-backdrop-filter: var(--blur-strong);
   border-bottom: var(--glass-border);
-  border-radius: 0 0 8px 8px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.08), var(--glass-shadow);
+  border-radius: 0 0 12px 12px;
+  position: fixed !important;
+  top: 0 !important; left: 0 !important; right: 0 !important;
+  z-index: 1000 !important;
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  height: auto !important;
+  min-height: 68px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  box-sizing: content-box !important;
+  overflow: visible !important;
 }
-
-.headerButton-user {
-  background: none !important;
-  border: none !important;
+.skinHeader.headroom--unpinned,
+.skinHeader.hide,
+.skinHeader.visuallyHidden,
+.skinHeader.headroom--frozen {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
-
-.headerButton-user .userImage {
-  border: 2px solid rgba(255,255,255,0.35);
-  border-radius: 50%;
-}
-
-/* ======================== CARD BOX STYLES ======================== */
-.cardBox {
-  position: relative;
-  background: var(--glass-bg);
-  backdrop-filter: var(--liquid-glass-custom);
-  -webkit-backdrop-filter: var(--liquid-glass-custom);
-
-  border: var(--glass-border);
-  border-radius: 5px;
-  box-shadow: var(--glass-shadow);
-
-  transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
-}
-
-/* Animated subtle refraction overlay */
-.cardBox::before {
+.skinHeader::after {
   content: "";
   position: absolute;
-  top:0; left:0; right:0; bottom:0;
+  inset: 0;
   border-radius: inherit;
+  background: var(--top-shine);
   pointer-events: none;
-  background: inherit;
-  mix-blend-mode: overlay;
-  transform: scale(1.02);
-  animation: liquidRefraction 8s infinite alternate ease-in-out;
+}
+.headerButton-user { background: none !important; border: none !important; }
+.headerButton-user .userImage {
+  border: 1.5px solid rgba(255,255,255,0.40);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.07);
 }
 
-@keyframes liquidRefraction {
-  0%   { transform: translate(0px,0px) scale(1.02); }
-  50%  { transform: translate(-2px,2px) scale(1.03); }
-  100% { transform: translate(0px,0px) scale(1.02); }
-}
-
-/* Card hover effect: only outline + popup, no darkening */
-.cardBox:hover {
-  transform: scale(1.06); /* slightly higher popup */
-  backdrop-filter: var(--liquid-glass-custom-soft);
-  -webkit-backdrop-filter: var(--liquid-glass-custom-soft);
-  outline: 2px solid rgba(0, 164, 220, 0.6);
-  outline-offset: 4px;
+/* ======================== FUTURISTIC EMBY BUTTON ======================== */
+.emby-button:not(.navMenuOption):not(.cardImageContainer) {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65em 1.2em 0.35em !important;
+  min-height: 2.2em !important;
+  line-height: normal !important;
+  vertical-align: middle !important;
+  background-color: rgba(0,0,0,0.45) !important;
+  backdrop-filter: blur(8px) saturate(140%) brightness(0.85) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(140%) brightness(0.85) !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: var(--btn-radius) !important;
+  color: #fff !important;
+  font-family: "Inter", sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 500;
+  overflow: hidden !important;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease !important;
   z-index: 1;
 }
 
-.cardBox:not(.visualCardBox) .cardPadder,
-.cardContent-shadow {
-  box-shadow: none !important;
+/* Neon underglow — slides left to right */
+.emby-button:not(.navMenuOption):not(.cardImageContainer)::before {
+  content: "";
+  position: absolute;
+  top: -2px; bottom: -2px;
+  left: -60%;
+  width: 50%;
+  border-radius: calc(var(--btn-radius) + 2px);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--btn-hue), 100%, 65%),
+    hsl(calc(var(--btn-hue) + 40deg), 100%, 70%),
+    transparent
+  );
+  filter: blur(10px);
+  opacity: 0.45;
+  z-index: -1;
+  animation: btnGlowSlide 2.5s linear infinite;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+@keyframes btnGlowSlide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(500%); }
 }
 
-/* ======================== LIQUID SIDE-TAB SCROLL BUTTONS ======================== */
+/* Blur sweep fog — triggered by JS .lg-sweep class */
+.emby-button:not(.navMenuOption):not(.cardImageContainer)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -80%;
+  width: 70%;
+  height: 55%;
+  transform: translate(0, -50%) skewX(-12deg);
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgba(255,255,255,0.18) 0%,
+    rgba(255,255,255,0.06) 55%,
+    transparent 100%
+  );
+  backdrop-filter: blur(10px) brightness(1.1);
+  -webkit-backdrop-filter: blur(10px) brightness(1.1);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 20%, black 80%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, black 20%, black 80%, transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  filter: blur(4px);
+}
+.emby-button:not(.navMenuOption):not(.cardImageContainer).lg-sweep::after {
+  animation: btnBlurSweep 2.2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+@keyframes btnBlurSweep {
+  0%   { transform: translate(0, -50%) skewX(-12deg);    opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translate(400%, -50%) skewX(-12deg); opacity: 0.4; }
+}
+
+.emby-button:not(.navMenuOption):not(.cardImageContainer):hover {
+  border-color: rgba(255,255,255,0.40) !important;
+  transform: translateY(-2px) !important;
+}
+.emby-button:not(.navMenuOption):not(.cardImageContainer):hover::before {
+  opacity: 0.50;
+  filter: blur(12px);
+}
+.emby-button:not(.navMenuOption):not(.cardImageContainer):active {
+  transform: scale(0.93) translateY(1px) !important;
+  border-color: rgba(255,255,255,0.80) !important;
+  box-shadow: 0 0 20px rgba(0,195,255,0.60),
+              inset 0 0 12px rgba(255,255,255,0.10) !important;
+}
+.emby-button:not(.navMenuOption):not(.cardImageContainer) > * {
+  position: relative;
+  z-index: 4;
+}
+
+/* ======================== USER PREFERENCES PAGE ======================== */
+.prefPage .emby-button,
+.userPreferencesPage .emby-button,
+.settingsPage .emby-button {
+  display: flex !important;
+  width: 100% !important;
+  justify-content: flex-start !important;
+}
+
+
+/* ======================== SECTION TITLES ======================== */
+/* Only apply section title background to non-button, non-anchor elements */
+.sectionTitle:not(button):not(a):not(.emby-button),
+.homeSectionHeader:not(button):not(a):not(.emby-button) {
+  display: inline-flex !important;
+  align-items: center;
+  background-color: rgba(0,0,0,0.45) !important;
+  backdrop-filter: blur(8px) saturate(140%) brightness(0.85) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(140%) brightness(0.85) !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: var(--btn-radius) !important;
+  padding: 0.35em 1.0em !important;
+  color: #fff !important;
+}
+
+/* ======================== MAIN DRAWER ======================== */
+.mainDrawer {
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(20px) saturate(160%) brightness(0.80) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) brightness(0.80) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.40) !important;
+}
+
+/* Drawer nav — keep vertical */
+.mainDrawer .emby-button,
+.navMenuOption {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+}
+
+/* ======================== GLASS BASE ======================== */
+.nowPlayingBar,
+.paper-icon-button-light,
+.headerButton {
+  position: relative;
+  overflow: hidden;
+}
+
+.nowPlayingBar::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 30%;
+  background: var(--top-shine);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ======================== CARD BOX ======================== */
+.cardBox {
+  background: var(--glass-bg) !important;
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+  transition: transform 0.3s ease !important;
+}
+.cardBox:hover {
+  background: var(--glass-bg-hover) !important;
+  z-index: 10;
+}
+.cardContent-shadow { box-shadow: none !important; }
+
+/* ======================== RIPPLE EFFECT ======================== */
+@keyframes lgRippleOut {
+  0%   { width: 0px;   height: 0px;   opacity: 1; }
+  60%  { width: 180px; height: 180px; opacity: 0.6; }
+  100% { width: 260px; height: 260px; opacity: 0; }
+}
+
+/* ======================== WATER PRESS EFFECT ======================== */
+@keyframes waterPress {
+  0%   { transform: scale(1);          filter: brightness(1); }
+  20%  { transform: scale(0.96, 0.98); filter: brightness(1.08); }
+  50%  { transform: scale(1.03, 0.97); filter: brightness(1.04); }
+  75%  { transform: scale(0.99, 1.02); filter: brightness(1.02); }
+  100% { transform: scale(1);          filter: brightness(1); }
+}
+.cardBox:active { animation: waterPress 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+/* ======================== CARD HOVER — scale outer wrapper ======================== */
+.itemsContainer > .card {
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  z-index: 1;
+  overflow: visible !important;
+}
+.itemsContainer > .card:hover {
+  transform: scale(1.06) translateY(-4px);
+  z-index: 100 !important;
+}
+.itemsContainer > .card:has(~ .card:hover),
+.itemsContainer > .card:hover ~ .card { transform: scale(0.97); }
+.itemsContainer { overflow: visible !important; }
+
+/* ======================== SCROLL BUTTONS ======================== */
 .emby-scrollbuttons {
   position: absolute !important;
   right: 0 !important;
   left: auto !important;
   top: 0 !important;
+  bottom: 0 !important;
+  width: 0 !important;
   height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
@@ -123,117 +334,177 @@ html {
   align-items: flex-end !important;
   gap: 10px;
   pointer-events: none !important;
+  z-index: 500 !important;
+  overflow: visible !important;
 }
 
+.content-scrollbutton-container,
+.itemsContainer,
+.sectionTitleContainer,
+.sectionTitleTextContainer {
+  position: relative !important;
+}
+.homeSectionsContainer > div,
+.section {
+  position: relative !important;
+}
+
+.content-scrollbutton-container {
+  position: relative !important;
+  overflow: visible !important;
+}
 .emby-scrollbuttons-button {
   pointer-events: initial !important;
   font-size: 1.5em !important;
-  width: 50px !important;
+  width: 52px !important;
   height: 100px !important;
   border-radius: 100px 0 0 100px !important;
-
   background: var(--glass-bg);
-  backdrop-filter: var(--liquid-glass-custom);
-  -webkit-backdrop-filter: var(--liquid-glass-custom);
-
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
   border: var(--glass-border);
+  border-top: var(--glass-border-top);
   border-right: none !important;
   box-shadow: var(--glass-shadow);
-
   opacity: 0;
-  transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  transform: translateX(10px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: -5px;
 }
-
-.content-scrollbutton-container:hover .emby-scrollbuttons-button {
-  opacity: 0.3;
-  margin-right: 0;
+.content-scrollbutton-container:hover .emby-scrollbuttons-button { opacity: 0.38; transform: translateX(0); }
+@media (hover: none), (pointer: coarse) {
+  .emby-scrollbuttons-button {
+    opacity: 0.45 !important;
+    transform: translateX(0) !important;
+    width: 44px !important;
+    height: 80px !important;
+    font-size: 1.2em !important;
+  }
 }
-
 .emby-scrollbuttons-button:hover {
-  opacity: 1;
-  width: 70px !important;
-  backdrop-filter: var(--liquid-glass-custom-strong);
-  -webkit-backdrop-filter: var(--liquid-glass-custom-strong);
+  opacity: 1 !important;
+  width: 72px !important;
+  backdrop-filter: var(--blur-strong);
+  -webkit-backdrop-filter: var(--blur-strong);
+  background: var(--glass-bg-hover);
 }
-
+.emby-scrollbuttons-button:active { animation: waterPress 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 .emby-scrollbuttons-button i,
-.emby-scrollbuttons-button .itemAction {
-  color: #fff;
-  padding-right: 5px;
-}
+.emby-scrollbuttons-button .itemAction { color: #fff; padding-right: 5px; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 
-/* ======================== LIST HOVER EFFECTS ======================== */
+/* ======================== LIST / MENU HOVER ======================== */
 .listItem:hover,
 .actionSheetMenuItem:hover,
 .navMenuOption:hover {
-  background-color: rgba(0,165,220,0.10);
+  background: linear-gradient(90deg, rgba(0,164,220,0.12) 0%, rgba(120,80,255,0.06) 100%);
+  backdrop-filter: var(--blur-soft);
+  -webkit-backdrop-filter: var(--blur-soft);
+}
+@media (hover: none), (pointer: coarse) {
+  .listItem:active, .actionSheetMenuItem:active, .navMenuOption:active {
+    background: linear-gradient(90deg, rgba(0,164,220,0.12) 0%, rgba(120,80,255,0.06) 100%);
+  }
 }
 
 /* ======================== NOW PLAYING BAR ======================== */
 .nowPlayingBar {
   position: fixed;
-  bottom: 2vh;
-  left: 5vw;
-  right: 5vw;
-  height: 8vh;
-  border-radius: 18px;
-
-  background: var(--glass-bg);
-  backdrop-filter: var(--liquid-glass-custom-strong);
-  -webkit-backdrop-filter: var(--liquid-glass-custom-strong);
-
+  bottom: 2vh; left: 5vw; right: 5vw;
+  height: clamp(56px, 8vh, 80px);
+  border-radius: 20px;
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--blur-strong);
+  -webkit-backdrop-filter: var(--blur-strong);
   border: var(--glass-border);
+  border-top: var(--glass-border-top);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,0,0,0.15);
 }
-
+@media (max-width: 600px) {
+  .nowPlayingBar { left: 2vw; right: 2vw; bottom: 1vh; border-radius: 14px; }
+}
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .nowPlayingBar { bottom: max(2vh, calc(env(safe-area-inset-bottom) + 8px)); }
+}
+.nowPlayingBar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, var(--iris-1) 30%, var(--iris-3) 60%, transparent 100%);
+  mix-blend-mode: overlay;
+  opacity: 0.30;
+  animation: barShimmer 14s infinite alternate ease-in-out;
+}
+@keyframes barShimmer {
+  0% { opacity: 0.15; } 50% { opacity: 0.30; } 100% { opacity: 0.15; }
+}
 .nowPlayingBar .nowPlayingImage,
 .nowPlayingPageImage {
   border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  box-shadow: 0 0 12px rgba(0,164,220,0.3);
   animation: spin 6s linear infinite paused;
 }
-
 .nowPlayingBarTop:has(.pause_circle_filled) .nowPlayingImage,
-.nowPlayingInfoContainer:has(.pause_circle_filled) .nowPlayingPageImage {
-  animation-play-state: running;
-}
+.nowPlayingInfoContainer:has(.pause_circle_filled) .nowPlayingPageImage { animation-play-state: running; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* ======================== DIALOGS & ACTION SHEETS ======================== */
+.actionSheet {
+  background: var(--glass-bg-strong) !important;
+  backdrop-filter: var(--blur-strong) !important;
+  -webkit-backdrop-filter: var(--blur-strong) !important;
+  border: var(--glass-border) !important;
+  border-top: var(--glass-border-top) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 16px !important;
 }
-
-/* ======================== TOUCH & MOBILE FRIENDLY ======================== */
-@media (hover: none), (pointer: coarse) {
-  .cardBox:hover,
-  .emby-scrollbuttons-button:hover {
-    transform: none !important;
-    box-shadow: var(--glass-shadow);
+.dialogContainer .dialog {
+  background: var(--glass-bg-strong) !important;
+  backdrop-filter: var(--blur-strong) !important;
+  -webkit-backdrop-filter: var(--blur-strong) !important;
+  border: var(--glass-border) !important;
+  border-top: var(--glass-border-top) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 16px !important;
+}
+@media (max-width: 600px) {
+  .actionSheet {
+    border-radius: 20px 20px 0 0 !important;
+    left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100% !important;
   }
 }
 
-/* ======================== WATER PRESS EFFECT ======================== */
-@keyframes waterPress {
-  0%   { transform: scale(1); }
-  25%  { transform: scale(0.95, 0.98); }
-  50%  { transform: scale(1.02, 0.97); }
-  75%  { transform: scale(0.98, 1.03); }
-  100% { transform: scale(1); }
+/* ======================== TEXT LEGIBILITY ======================== */
+.cardBox .cardText,
+.cardBox .cardTextRow,
+.cardBox .cardTitle,
+.cardBox .cardSubtitle { text-shadow: 0 1px 3px rgba(0,0,0,0.95), 0 2px 10px rgba(0,0,0,0.85); }
+.cardText, .cardTitle, .cardTextRow { text-shadow: 0 1px 4px rgba(0,0,0,1.00), 0 2px 12px rgba(0,0,0,0.95); }
+.nowPlayingBar, .nowPlayingBar * { text-shadow: 0 1px 3px rgba(0,0,0,0.95), 0 2px 10px rgba(0,0,0,0.85); }
+.skinHeader, .skinHeader * { text-shadow: 0 1px 3px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.80); }
+.emby-scrollbuttons-button i { text-shadow: 0 1px 6px rgba(0,0,0,0.90), 0 0 12px rgba(0,0,0,0.60); }
+
+/* ======================== BACKDROP FILTER FALLBACK ======================== */
+@supports not (backdrop-filter: blur(1px)) {
+  .skinHeader { background: rgba(14,14,14,0.88) !important; }
+  .nowPlayingBar { background: rgba(18,18,18,0.82) !important; }
+  .actionSheet, .dialogContainer .dialog { background: rgba(18,18,18,0.88) !important; }
 }
 
-.cardBox:active {
-  animation: waterPress 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+/* ======================== REDUCE MOTION ======================== */
+@media (prefers-reduced-motion: reduce) {
+  .nowPlayingBar::before,
+  .emby-button:not(.navMenuOption):not(.cardImageContainer)::before { animation: none; }
 }
 
-.emby-scrollbuttons-button:active {
-  animation: waterPress 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* ======================== CARD ACCORDION EFFECT (JS REQUIRED) ======================== */
-.itemsContainer > .card {
-  transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
-  position: relative;
-  z-index: 1;
+.pageTitleWithLogo {
+    background-position: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 13.2em;
+    height: 3em;
 }
