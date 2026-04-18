@@ -33,6 +33,20 @@ html {
   --btn-hue: 197deg;
 }
 
+.sectionTitle:not(button):not(a):not(.emby-button), .homeSectionHeader:not(button):not(a):not(.emby-button)
+Specificity: (0,2,2)
+ {
+    display: inline-flex !important;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: blur(8px) saturate(140%) brightness(0.85) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(140%) brightness(0.85) !important;
+    border: 0px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: var(--btn-radius) !important;
+    padding: 0.35em 1.0em !important;
+    color: #fff !important;
+}
+
 /* ======================== BACKDROP IMAGE ======================== */
 .backgroundContainer,
 .backgroundContainer.withBackdrop,
